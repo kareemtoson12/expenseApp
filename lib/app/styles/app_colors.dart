@@ -10,7 +10,6 @@ class AppColors {
       Color(0xFF2196F3),
       Color(0xFF0057FF),
       Color(0xFF0057FF),
-      Color.fromARGB(255, 3, 74, 217),
     ],
     begin: Alignment.topRight,
     end: Alignment.bottomLeft,
