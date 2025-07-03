@@ -14,6 +14,11 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       );
     case AppRoutes.onboarding:
       return MaterialPageRoute(builder: (_) => const OnboardingView());
+    case AppRoutes.login:
+      return MaterialPageRoute(
+        builder: (_) =>
+            const Scaffold(body: Center(child: Text('Login Screen'))),
+      );
     default:
       return MaterialPageRoute(
         builder: (_) =>

@@ -1,37 +1,11 @@
 import 'package:expense/app/styles/app_colors.dart';
 import 'package:expense/app/styles/text_styles.dart';
-import 'package:expense/app/styles/button_styles.dart';
+import 'package:expense/presentation/onboarding/model.dart';
+import 'package:expense/presentation/onboarding/widgets/onboarding_content.dart';
+import 'package:expense/presentation/onboarding/widgets/onboarding_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
-class OnboardingPageData {
-  final String svgAsset;
-  final String title;
-  final String subtitle;
-  OnboardingPageData({
-    required this.svgAsset,
-    required this.title,
-    required this.subtitle,
-  });
-}
-
-final List<OnboardingPageData> onboardingPages = [
-  OnboardingPageData(
-    svgAsset: 'assets/svg/on1.svg',
-    title: 'Note Down Expenses',
-    subtitle: 'Daily note your expenses to\nhelp manage money',
-  ),
-  OnboardingPageData(
-    svgAsset: 'assets/svg/on2.svg',
-    title: 'Simple Money Management',
-    subtitle: 'Get your notifications or alert\nwhen you do the over expenses',
-  ),
-  OnboardingPageData(
-    svgAsset: 'assets/svg/on3.svg',
-    title: 'Easy to Track and Analize',
-    subtitle: "Tracking your expense help make sure\nyou don't overspend",
-  ),
-];
+import 'package:expense/app/routing/routes.dart';
 
 class OnboardingView extends StatefulWidget {
   const OnboardingView({super.key});
@@ -42,15 +16,29 @@ class OnboardingView extends StatefulWidget {
 
 class _OnboardingViewState extends State<OnboardingView> {
   int _currentPage = 0;
+  late final PageController _pageController;
+
+  @override
+  void initState() {
+    super.initState();
+    _pageController = PageController();
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
 
   void _nextPage() {
-    setState(() {
-      if (_currentPage < onboardingPages.length - 1) {
-        _currentPage++;
-      } else {
-        // TODO: Navigate to next screen
-      }
-    });
+    if (_currentPage < onboardingPages.length - 1) {
+      _pageController.nextPage(
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+      );
+    } else {
+      Navigator.pushReplacementNamed(context, AppRoutes.login);
+    }
   }
 
   @override
@@ -58,7 +46,6 @@ class _OnboardingViewState extends State<OnboardingView> {
     final size = MediaQuery.of(context).size;
     final width = size.width;
     final height = size.height;
-    final page = onboardingPages[_currentPage];
 
     return Scaffold(
       backgroundColor: AppColors.primary,
@@ -66,7 +53,7 @@ class _OnboardingViewState extends State<OnboardingView> {
         child: Column(
           children: [
             SizedBox(height: height * 0.05),
-            // header logo
+            // header logo widget
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -84,26 +71,26 @@ class _OnboardingViewState extends State<OnboardingView> {
               ],
             ),
             SizedBox(height: height * 0.08),
-            //onboarding image
-            SvgPicture.asset(
-              page.svgAsset,
-              width: width * 0.9,
-              height: height * 0.42,
-              fit: BoxFit.contain,
+            Expanded(
+              child: PageView.builder(
+                controller: _pageController,
+                itemCount: onboardingPages.length,
+                onPageChanged: (index) {
+                  setState(() {
+                    _currentPage = index;
+                  });
+                },
+                itemBuilder: (context, index) {
+                  final page = onboardingPages[index];
+                  return OnboardingContent(
+                    data: page,
+                    width: width,
+                    height: height,
+                  );
+                },
+              ),
             ),
-            SizedBox(height: height * 0.06),
-            Text(
-              page.title,
-              style: AppTextStyles.onboardingTitle,
-              textAlign: TextAlign.center,
-            ),
-            SizedBox(height: height * 0.015),
-            Text(
-              page.subtitle,
-              style: AppTextStyles.onboardingSubtitle,
-              textAlign: TextAlign.center,
-            ),
-            SizedBox(height: height * 0.06),
+            SizedBox(height: height * 0.02),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: List.generate(onboardingPages.length, (index) {
@@ -130,7 +117,7 @@ class _OnboardingViewState extends State<OnboardingView> {
                 }
               }),
             ),
-            SizedBox(height: height * 0.06),
+            SizedBox(height: height * 0.04),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: width * 0.08),
               child: GradientButton(
@@ -142,6 +129,7 @@ class _OnboardingViewState extends State<OnboardingView> {
                 height: 48,
               ),
             ),
+            SizedBox(height: height * 0.04),
           ],
         ),
       ),
