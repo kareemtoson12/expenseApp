@@ -8,6 +8,7 @@ class AuthTextFields extends StatefulWidget {
   final TextEditingController? phoneController;
   final TextEditingController? passwordController;
   final TextEditingController? confirmPasswordController;
+  final TextEditingController? monthlyIncomeController;
 
   const AuthTextFields({
     super.key,
@@ -18,6 +19,7 @@ class AuthTextFields extends StatefulWidget {
     this.phoneController,
     this.passwordController,
     this.confirmPasswordController,
+    this.monthlyIncomeController,
   });
 
   @override
@@ -31,6 +33,7 @@ class _AuthTextFieldsState extends State<AuthTextFields> {
   late final TextEditingController _phoneController;
   late final TextEditingController _passwordController;
   late final TextEditingController _confirmPasswordController;
+  late final TextEditingController _monthlyIncomeController;
   bool _obscurePassword = true;
   bool _obscureConfirmPassword = true;
 
@@ -49,6 +52,8 @@ class _AuthTextFieldsState extends State<AuthTextFields> {
     _passwordController = widget.passwordController ?? TextEditingController();
     _confirmPasswordController =
         widget.confirmPasswordController ?? TextEditingController();
+    _monthlyIncomeController =
+        widget.monthlyIncomeController ?? TextEditingController();
   }
 
   @override
@@ -60,6 +65,8 @@ class _AuthTextFieldsState extends State<AuthTextFields> {
     if (widget.passwordController == null) _passwordController.dispose();
     if (widget.confirmPasswordController == null)
       _confirmPasswordController.dispose();
+    if (widget.monthlyIncomeController == null)
+      _monthlyIncomeController.dispose();
     super.dispose();
   }
 
@@ -189,6 +196,24 @@ class _AuthTextFieldsState extends State<AuthTextFields> {
             ),
           ),
         ),
+        const SizedBox(height: 16),
+        if (widget.monthlyIncomeController != null) ...[
+          TextField(
+            controller: _monthlyIncomeController,
+            keyboardType: TextInputType.number,
+            decoration: InputDecoration(
+              labelText: 'Monthly Income',
+              prefixIcon: const Icon(Icons.attach_money, color: Colors.black54),
+              filled: true,
+              fillColor: Colors.grey.shade100,
+              border: _border,
+              enabledBorder: _border,
+              focusedBorder: _border.copyWith(
+                borderSide: BorderSide(color: Colors.blue.shade200, width: 1.5),
+              ),
+            ),
+          ),
+        ],
       ],
     );
   }

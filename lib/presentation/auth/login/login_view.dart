@@ -120,11 +120,11 @@ class _LoginViewState extends State<LoginView> {
                       },
                     ),
                     // Forgot password
-                    ForgotPassword(
+                    /*  ForgotPassword(
                       onTap: () {
                         // Handle forgot password
                       },
-                    ),
+                    ), */
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 8.0),
                       child: Text('Or', style: AppTextStyles.registerText),

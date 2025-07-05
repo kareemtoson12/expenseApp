@@ -9,6 +9,7 @@ import 'package:expense/domain/models/signup_request_model.dart';
 import 'package:expense/app/styles/text_styles.dart';
 import 'package:expense/app/routing/routes.dart';
 import 'package:expense/app/di/injection_container.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SignupView extends StatefulWidget {
   const SignupView({super.key});
@@ -24,6 +25,8 @@ class _SignupViewState extends State<SignupView> {
   final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController =
+      TextEditingController();
+  final TextEditingController _monthlyIncomeController =
       TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
@@ -43,12 +46,31 @@ class _SignupViewState extends State<SignupView> {
     _phoneController.dispose();
     _passwordController.dispose();
     _confirmPasswordController.dispose();
+    _monthlyIncomeController.dispose();
     _signUpCubit.close();
     super.dispose();
   }
 
-  void _handleSignUp() {
-    if (!_formKey.currentState!.validate()) {
+  Future<void> _saveMonthlyIncome(String value) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('monthly_income', value);
+  }
+
+  void _handleSignUp() async {
+    if (!_formKey.currentState!.validate() ||
+        _monthlyIncomeController.text.isEmpty ||
+        double.tryParse(_monthlyIncomeController.text) == null) {
+      if (_monthlyIncomeController.text.isEmpty) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Please enter your monthly income')),
+        );
+      } else if (double.tryParse(_monthlyIncomeController.text) == null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Please enter a valid number for monthly income'),
+          ),
+        );
+      }
       return;
     }
 
@@ -58,6 +80,9 @@ class _SignupViewState extends State<SignupView> {
       ).showSnackBar(const SnackBar(content: Text('Passwords do not match')));
       return;
     }
+
+    // Save monthly income to SharedPreferences
+    await _saveMonthlyIncome(_monthlyIncomeController.text.trim());
 
     final request = SignUpRequestModel(
       name: _nameController.text.trim(),
@@ -121,6 +146,7 @@ class _SignupViewState extends State<SignupView> {
                         phoneController: _phoneController,
                         passwordController: _passwordController,
                         confirmPasswordController: _confirmPasswordController,
+                        monthlyIncomeController: _monthlyIncomeController,
                       ),
                     ),
                     const SizedBox(height: 12),

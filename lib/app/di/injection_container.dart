@@ -4,7 +4,7 @@ import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import '../../data/api/auth_api_service.dart';
 import '../../presentation/auth/signup/signup_cubit.dart';
 import '../../presentation/auth/login/login_cubit.dart';
-import '../constants.dart';
+import '../../data/constants.dart';
 
 final GetIt sl = GetIt.instance;
 
