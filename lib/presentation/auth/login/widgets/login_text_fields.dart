@@ -1,15 +1,22 @@
 import 'package:flutter/material.dart';
 
 class LoginTextFields extends StatefulWidget {
-  const LoginTextFields({super.key});
+  final TextEditingController? emailController;
+  final TextEditingController? passwordController;
+
+  const LoginTextFields({
+    super.key,
+    this.emailController,
+    this.passwordController,
+  });
 
   @override
   State<LoginTextFields> createState() => _LoginTextFieldsState();
 }
 
 class _LoginTextFieldsState extends State<LoginTextFields> {
-  final TextEditingController _usernameController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
+  late final TextEditingController _emailController;
+  late final TextEditingController _passwordController;
   bool _obscurePassword = true;
 
   OutlineInputBorder get _border => OutlineInputBorder(
@@ -18,9 +25,16 @@ class _LoginTextFieldsState extends State<LoginTextFields> {
   );
 
   @override
+  void initState() {
+    super.initState();
+    _emailController = widget.emailController ?? TextEditingController();
+    _passwordController = widget.passwordController ?? TextEditingController();
+  }
+
+  @override
   void dispose() {
-    _usernameController.dispose();
-    _passwordController.dispose();
+    if (widget.emailController == null) _emailController.dispose();
+    if (widget.passwordController == null) _passwordController.dispose();
     super.dispose();
   }
 
@@ -30,9 +44,10 @@ class _LoginTextFieldsState extends State<LoginTextFields> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         TextField(
-          controller: _usernameController,
+          controller: _emailController,
+          keyboardType: TextInputType.emailAddress,
           decoration: InputDecoration(
-            labelText: 'Username',
+            labelText: 'Email',
             prefixIcon: const Icon(Icons.person_outline, color: Colors.black54),
             filled: true,
             fillColor: Colors.grey.shade100,

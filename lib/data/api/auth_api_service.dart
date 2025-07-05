@@ -2,6 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 import '../../domain/models/signup_request_model.dart';
 import '../../domain/models/signup_response_model.dart';
+import '../../domain/models/login_request_model.dart';
+import '../../domain/models/login_response_model.dart';
 
 part 'auth_api_service.g.dart';
 
@@ -11,4 +13,7 @@ abstract class AuthApiService {
 
   @POST('/auth/register')
   Future<SignUpResponseModel> signUp(@Body() SignUpRequestModel request);
+
+  @POST('/auth/login')
+  Future<LoginResponseModel> login(@Body() LoginRequestModel request);
 }

@@ -177,6 +177,9 @@ class ApiErrorHandler {
         return 'This email is already registered. Please use a different email or try logging in.';
       } else if (message.contains('invalid') || message.contains('format')) {
         return 'Please enter a valid email address.';
+      } else if (message.contains('not found') ||
+          message.contains('does not exist')) {
+        return 'No account found with this email. Please check your email or create a new account.';
       }
     }
 
@@ -185,6 +188,10 @@ class ApiErrorHandler {
         return 'Passwords do not match. Please make sure both passwords are the same.';
       } else if (message.contains('minimum') || message.contains('length')) {
         return 'Password must be at least 6 characters long.';
+      } else if (message.contains('incorrect') ||
+          message.contains('wrong') ||
+          message.contains('invalid')) {
+        return 'Incorrect password. Please check your password and try again.';
       }
     }
 
@@ -204,6 +211,10 @@ class ApiErrorHandler {
       if (message.contains('required')) {
         return 'Please select your gender.';
       }
+    }
+
+    if (message.contains('credentials') || message.contains('authentication')) {
+      return 'Invalid email or password. Please check your credentials and try again.';
     }
 
     // Remove technical terms and make more conversational
