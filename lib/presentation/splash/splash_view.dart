@@ -26,7 +26,7 @@ class _SplashViewState extends State<SplashView>
     _fadeAnimation = CurvedAnimation(parent: _controller, curve: Curves.easeIn);
     _controller.forward();
 
-   /*  Timer(const Duration(seconds: 2), () {
+    /*  Timer(const Duration(seconds: 2), () {
       Navigator.pushReplacementNamed(context, '/onboarding');
     }); */
   }

@@ -2,20 +2,35 @@ import 'package:flutter/material.dart';
 
 class AuthTextFields extends StatefulWidget {
   final bool showEmail;
-  const AuthTextFields({super.key, this.showEmail = false});
+  final TextEditingController? nameController;
+  final TextEditingController? usernameController;
+  final TextEditingController? emailController;
+  final TextEditingController? phoneController;
+  final TextEditingController? passwordController;
+  final TextEditingController? confirmPasswordController;
+
+  const AuthTextFields({
+    super.key,
+    this.showEmail = false,
+    this.nameController,
+    this.usernameController,
+    this.emailController,
+    this.phoneController,
+    this.passwordController,
+    this.confirmPasswordController,
+  });
 
   @override
   State<AuthTextFields> createState() => _AuthTextFieldsState();
 }
 
 class _AuthTextFieldsState extends State<AuthTextFields> {
-  final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _usernameController = TextEditingController();
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _phoneController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController =
-      TextEditingController();
+  late final TextEditingController _nameController;
+  late final TextEditingController _usernameController;
+  late final TextEditingController _emailController;
+  late final TextEditingController _phoneController;
+  late final TextEditingController _passwordController;
+  late final TextEditingController _confirmPasswordController;
   bool _obscurePassword = true;
   bool _obscureConfirmPassword = true;
 
@@ -25,13 +40,26 @@ class _AuthTextFieldsState extends State<AuthTextFields> {
   );
 
   @override
+  void initState() {
+    super.initState();
+    _nameController = widget.nameController ?? TextEditingController();
+    _usernameController = widget.usernameController ?? TextEditingController();
+    _emailController = widget.emailController ?? TextEditingController();
+    _phoneController = widget.phoneController ?? TextEditingController();
+    _passwordController = widget.passwordController ?? TextEditingController();
+    _confirmPasswordController =
+        widget.confirmPasswordController ?? TextEditingController();
+  }
+
+  @override
   void dispose() {
-    _nameController.dispose();
-    _usernameController.dispose();
-    _emailController.dispose();
-    _phoneController.dispose();
-    _passwordController.dispose();
-    _confirmPasswordController.dispose();
+    if (widget.nameController == null) _nameController.dispose();
+    if (widget.usernameController == null) _usernameController.dispose();
+    if (widget.emailController == null) _emailController.dispose();
+    if (widget.phoneController == null) _phoneController.dispose();
+    if (widget.passwordController == null) _passwordController.dispose();
+    if (widget.confirmPasswordController == null)
+      _confirmPasswordController.dispose();
     super.dispose();
   }
 
