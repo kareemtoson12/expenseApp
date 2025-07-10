@@ -56,6 +56,24 @@ class _SignupViewState extends State<SignupView> {
     await prefs.setString('monthly_income', value);
   }
 
+  Future<void> _saveUserData() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(
+      'monthly_income',
+      _monthlyIncomeController.text.trim(),
+    );
+    await prefs.setString('name', _nameController.text.trim());
+    // Extract and save username
+    final username = _extractUsername(_nameController.text.trim());
+    await prefs.setString('username', username);
+  }
+
+  String _extractUsername(String fullName) {
+    if (fullName.isEmpty) return '';
+    final parts = fullName.trim().split(' ');
+    return parts.first;
+  }
+
   void _handleSignUp() async {
     if (!_formKey.currentState!.validate() ||
         _monthlyIncomeController.text.isEmpty ||
@@ -81,8 +99,8 @@ class _SignupViewState extends State<SignupView> {
       return;
     }
 
-    // Save monthly income to SharedPreferences
-    await _saveMonthlyIncome(_monthlyIncomeController.text.trim());
+    // Save monthly income, name, and username to SharedPreferences
+    await _saveUserData();
 
     final request = SignUpRequestModel(
       name: _nameController.text.trim(),

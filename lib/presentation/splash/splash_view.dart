@@ -1,3 +1,4 @@
+import 'package:expense/app/routing/routes.dart';
 import 'package:expense/app/styles/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
@@ -25,10 +26,10 @@ class _SplashViewState extends State<SplashView>
     );
     _fadeAnimation = CurvedAnimation(parent: _controller, curve: Curves.easeIn);
     _controller.forward();
-    
-    Timer(const Duration(seconds: 2), () {
-      Navigator.pushReplacementNamed(context, '/onboarding');
-    }); 
+
+    /*  Timer(Duration(seconds: 2), () {
+      Navigator.pushReplacementNamed(context, AppRoutes.onboarding);
+    }); */
   }
 
   @override
