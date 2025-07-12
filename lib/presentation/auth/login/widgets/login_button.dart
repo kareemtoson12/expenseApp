@@ -27,7 +27,7 @@ class LoginButton extends StatelessWidget {
           decoration: BoxDecoration(
             gradient: AppColors.buttonGradient,
             borderRadius: BorderRadius.circular(16),
-          ),
+          ), 
           alignment: Alignment.center,
           child: Text(
             text,

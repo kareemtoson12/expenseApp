@@ -10,7 +10,7 @@ class ExpenseApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Expense App',
-      initialRoute: AppRoutes.home,
+      initialRoute: AppRoutes.splash,
       onGenerateRoute: generateRoute,
     );
   }

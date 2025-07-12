@@ -10,6 +10,7 @@ import '../../presentation/onboarding/onboarding_view.dart';
 import '../../presentation/auth/signup/signup_view.dart';
 import 'routes.dart';
 import 'package:expense/presentation/home/all_expenses_screen.dart';
+import 'package:expense/presentation/settings/settings_screen.dart';
 
 Route<dynamic> generateRoute(RouteSettings settings) {
   switch (settings.name) {
@@ -35,6 +36,8 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(builder: (_) => LoginView());
     case AppRoutes.signup:
       return MaterialPageRoute(builder: (_) => const SignupView());
+    case AppRoutes.settings:
+      return MaterialPageRoute(builder: (_) => const SettingsScreen());
     case '/all_expenses':
       return MaterialPageRoute(
         builder: (_) => BlocProvider(

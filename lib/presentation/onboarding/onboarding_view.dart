@@ -100,7 +100,7 @@ class _OnboardingViewState extends State<OnboardingView> {
                     height: 8,
                     margin: const EdgeInsets.symmetric(horizontal: 4),
                     decoration: BoxDecoration(
-                      color: AppColors.blue,
+                      color: Colors.blue, // Active dot is blue
                       borderRadius: BorderRadius.circular(4),
                     ),
                   );
@@ -110,7 +110,7 @@ class _OnboardingViewState extends State<OnboardingView> {
                     height: 8,
                     margin: const EdgeInsets.symmetric(horizontal: 4),
                     decoration: BoxDecoration(
-                      color: Colors.grey[300],
+                      color: Colors.blue[100], // Inactive dot is light blue
                       shape: BoxShape.circle,
                     ),
                   );

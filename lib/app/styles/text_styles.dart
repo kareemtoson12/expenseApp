@@ -42,4 +42,10 @@ class AppTextStyles {
     fontWeight: FontWeight.w600,
     fontSize: 15,
   );
+
+  static const TextStyle settingsItem = TextStyle(
+    fontSize: 16,
+    color: AppColors.text,
+    fontWeight: FontWeight.w500,
+  );
 }
