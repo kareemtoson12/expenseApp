@@ -36,7 +36,7 @@ class BalanceCard extends StatelessWidget {
             children: [
               SizedBox(height: size.height * 0.04),
               Text(
-                '\$${balance.toStringAsFixed(2)}',
+                '\$${balance.clamp(0, double.infinity).toStringAsFixed(2)}',
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: fontSize,

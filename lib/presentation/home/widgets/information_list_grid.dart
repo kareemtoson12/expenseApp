@@ -1,5 +1,9 @@
+import 'package:expense/domain/models/expense_model.dart';
+import 'package:expense/presentation/home/cubit/expense_cubit.dart';
+import 'package:expense/presentation/home/widgets/add_bill_bottom_sheet.dart';
 import 'package:flutter/material.dart';
-import 'add_bill_bottom_sheet.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:expense/presentation/home/all_expenses_screen.dart';
 
 class InformationListGrid extends StatelessWidget {
   const InformationListGrid({Key? key}) : super(key: key);
@@ -30,7 +34,9 @@ class InformationListGrid extends StatelessWidget {
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
               ),
               TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.of(context).pushNamed('/all_expenses');
+                },
                 child: const Text(
                   'View',
                   style: TextStyle(fontWeight: FontWeight.w500),
@@ -53,9 +59,10 @@ class InformationListGrid extends StatelessWidget {
           itemBuilder: (context, index) {
             final item = categories[index];
             return GestureDetector(
-              onTap: () {
+              onTap: () async {
                 final controller = TextEditingController();
-                showModalBottomSheet(
+
+                final amount = await showModalBottomSheet<double>(
                   context: context,
                   isScrollControlled: true,
                   shape: const RoundedRectangleBorder(
@@ -72,12 +79,27 @@ class InformationListGrid extends StatelessWidget {
                       iconAsset: item['icon']!,
                       controller: controller,
                       onDone: () {
-                        // Handle done action
-                        Navigator.pop(context);
+                        final value = double.tryParse(controller.text);
+                        if (value != null && value > 0) {
+                          Navigator.pop(context, value);
+                        } else {
+                          Navigator.pop(context);
+                        }
                       },
                     ),
                   ),
                 );
+
+                if (amount != null && amount > 0) {
+                  final cubit = context.read<ExpenseCubit>();
+                  final expense = Expense(
+                    category: item['label']!,
+                    amount: amount,
+
+                    date: DateTime.now(),
+                  );
+                  await cubit.addExpense(expense);
+                }
               },
               child: Column(
                 mainAxisSize: MainAxisSize.min,

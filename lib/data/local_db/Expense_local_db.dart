@@ -23,4 +23,9 @@ class ExpenseLocalDataSource {
     final box = await Hive.openBox<Expense>(boxName);
     await box.put(key, expense);
   }
+
+  Future<void> clearAllExpenses() async {
+    final box = await Hive.openBox<Expense>(boxName);
+    await box.clear();
+  }
 }

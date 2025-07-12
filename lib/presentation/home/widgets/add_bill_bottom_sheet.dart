@@ -63,7 +63,7 @@ class AddBillBottomSheet extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     SizedBox(
-                      width: 14,
+                      width: 60,
                       child: TextField(
                         controller: controller,
                         keyboardType: TextInputType.number,
@@ -76,10 +76,6 @@ class AddBillBottomSheet extends StatelessWidget {
                         style: const TextStyle(fontSize: 18),
                         textAlign: TextAlign.center,
                       ),
-                    ),
-                    const Text(
-                      '/month',
-                      style: TextStyle(fontSize: 13, color: Colors.grey),
                     ),
                   ],
                 ),
@@ -105,7 +101,10 @@ class AddBillBottomSheet extends StatelessWidget {
                   ),
                   padding: const EdgeInsets.symmetric(vertical: 16),
                 ),
-                onPressed: onDone,
+                onPressed: () {
+                  final amount = double.tryParse(controller.text);
+                  Navigator.pop(context, amount);
+                },
                 child: const Text('Done', style: TextStyle(fontSize: 18)),
               ),
             ),

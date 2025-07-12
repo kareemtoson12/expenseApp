@@ -20,4 +20,7 @@ class ExpenseRepositoryImpl implements ExpenseRepository {
   @override
   Future<void> updateExpense(int key, Expense expense) =>
       localDataSource.updateExpense(key, expense);
+
+  @override
+  Future<void> clearAllExpenses() => localDataSource.clearAllExpenses();
 }

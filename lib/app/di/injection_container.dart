@@ -57,8 +57,10 @@ Future<void> init() async {
   sl.registerLazySingleton<ExpenseRepository>(
     () => ExpenseRepositoryImpl(sl()),
   );
-  sl.registerLazySingleton(() => AddExpense(sl()));
-  sl.registerLazySingleton(() => GetAllExpenses(sl()));
-  sl.registerLazySingleton(() => DeleteExpense(sl()));
-  sl.registerLazySingleton(() => UpdateExpense(sl()));
+  // di/injection_container.dart
+  sl.registerLazySingleton<AddExpense>(() => AddExpense(sl()));
+  sl.registerLazySingleton<GetAllExpenses>(() => GetAllExpenses(sl()));
+  sl.registerLazySingleton<DeleteExpense>(() => DeleteExpense(sl()));
+  sl.registerLazySingleton<UpdateExpense>(() => UpdateExpense(sl()));
+  sl.registerLazySingleton<ClearAllExpenses>(() => ClearAllExpenses(sl()));
 }

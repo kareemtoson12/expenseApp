@@ -26,5 +26,13 @@ class UpdateExpense {
   final ExpenseRepository repository;
   UpdateExpense(this.repository);
 
-  Future<void> call(int key, Expense expense) => repository.updateExpense(key, expense);
+  Future<void> call(int key, Expense expense) =>
+      repository.updateExpense(key, expense);
+}
+
+class ClearAllExpenses {
+  final ExpenseRepository repository;
+  ClearAllExpenses(this.repository);
+
+  Future<void> call() => repository.clearAllExpenses();
 }
