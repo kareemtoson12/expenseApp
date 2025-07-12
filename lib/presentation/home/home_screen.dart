@@ -2,14 +2,22 @@ import 'package:expense/presentation/home/cubit/expense_cubit.dart';
 import 'package:expense/presentation/home/cubit/expense_state.dart';
 import 'package:expense/presentation/home/widgets/balance_card.dart';
 import 'package:expense/presentation/home/widgets/budget_pie_chart.dart';
-import 'package:expense/presentation/home/widgets/custom_bottom_nav_bar.dart';
+
 import 'package:expense/presentation/home/widgets/home_header.dart';
 import 'package:expense/presentation/home/widgets/information_list_grid.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:expense/presentation/home/widgets/custom_curved_nav_bar.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  int _selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -96,11 +104,15 @@ class HomeScreen extends StatelessWidget {
           ),
         ),
       ),
-      /*  bottomNavigationBar: CustomBottomNavBar(
-        selectedIndex: 0,
-        onTap: (i) {},
-        onFabTap: () {},
-      ), */
+      bottomNavigationBar: CustomCurvedNavBar(
+        selectedIndex: _selectedIndex,
+        onTap: (index) {
+          setState(() {
+            _selectedIndex = index;
+          });
+          // Handle navigation here if needed
+        },
+      ),
     );
   }
 }

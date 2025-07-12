@@ -14,9 +14,10 @@ class BudgetPieChart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorList = <Color>[
-      Colors.blue,
       Colors.purple,
+
       Colors.orange,
+
       Colors.redAccent,
       Colors.blue,
       Colors.green,
