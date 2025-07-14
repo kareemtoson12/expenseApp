@@ -46,29 +46,32 @@ class _SplashViewState extends State<SplashView>
     final height = size.height;
 
     return Scaffold(
-      backgroundColor: AppColors.primary,
-      body: SafeArea(
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              FadeTransition(
-                opacity: _fadeAnimation,
-                child: SvgPicture.asset(
-                  'assets/svg/logo.svg',
-                  width: width * 0.3,
-                  height: height * 0.19,
-                  fit: BoxFit.contain,
+      backgroundColor: Colors.transparent,
+      body: Container(
+        decoration: const BoxDecoration(gradient: AppColors.scaffoldGradient),
+        child: SafeArea(
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                FadeTransition(
+                  opacity: _fadeAnimation,
+                  child: SvgPicture.asset(
+                    'assets/svg/logo.svg',
+                    width: width * 0.3,
+                    height: height * 0.19,
+                    fit: BoxFit.contain,
+                  ),
                 ),
-              ),
-              FadeTransition(
-                opacity: _fadeAnimation,
-                child: Text(
-                  'monex',
-                  style: AppTextStyles.splashTitleStyle(width),
+                FadeTransition(
+                  opacity: _fadeAnimation,
+                  child: Text(
+                    'monex',
+                    style: AppTextStyles.splashTitleStyle(width),
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

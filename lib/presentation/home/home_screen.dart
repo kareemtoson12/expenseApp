@@ -1,13 +1,17 @@
+import 'package:curved_labeled_navigation_bar/curved_navigation_bar_item.dart';
 import 'package:expense/presentation/home/cubit/expense_cubit.dart';
 import 'package:expense/presentation/home/cubit/expense_state.dart';
 import 'package:expense/presentation/home/widgets/balance_card.dart';
 import 'package:expense/presentation/home/widgets/budget_pie_chart.dart';
 import 'package:expense/presentation/home/widgets/home_header.dart';
 import 'package:expense/presentation/home/widgets/information_list_grid.dart';
+import 'package:expense/presentation/profile/profile_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:expense/presentation/home/widgets/custom_curved_nav_bar.dart';
+import 'package:curved_labeled_navigation_bar/curved_navigation_bar.dart';
 import 'package:expense/presentation/settings/settings_screen.dart';
+import 'package:expense/presentation/home/widgets/profile_header.dart';
+import 'package:expense/app/styles/app_colors.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -23,14 +27,30 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     final List<Widget> _screens = [
       const HomeContent(),
-      const SettingsScreen(),
-      const ProfileScreen(),
+      SettingsScreen(),
+      ProfileScreen(),
     ];
     return Scaffold(
-      backgroundColor: Colors.white,
-      body: IndexedStack(index: _selectedIndex, children: _screens),
-      bottomNavigationBar: CustomCurvedNavBar(
-        selectedIndex: _selectedIndex,
+      backgroundColor: Colors.transparent,
+      body: Container(
+        decoration: const BoxDecoration(gradient: AppColors.scaffoldGradient),
+        child: IndexedStack(index: _selectedIndex, children: _screens),
+      ),
+      bottomNavigationBar: CurvedNavigationBar(
+        index: _selectedIndex,
+        items: [
+          CurvedNavigationBarItem(child: Icon(Icons.home), label: 'Home'),
+          CurvedNavigationBarItem(
+            child: Icon(Icons.settings),
+            label: 'Settings',
+          ),
+          CurvedNavigationBarItem(child: Icon(Icons.person), label: 'Profile'),
+        ],
+        color: Color(0xFF1976D2),
+        buttonBackgroundColor: Color(0xFF1976D2),
+        backgroundColor: Color(0xFFFFFFFF),
+        animationCurve: Curves.easeInOut,
+        animationDuration: Duration(milliseconds: 300),
         onTap: (index) {
           setState(() {
             _selectedIndex = index;
@@ -125,20 +145,6 @@ class HomeContent extends StatelessWidget {
             );
           },
         ),
-      ),
-    );
-  }
-}
-
-class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return const Center(
-      child: Text(
-        'Profile Screen',
-        style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
       ),
     );
   }

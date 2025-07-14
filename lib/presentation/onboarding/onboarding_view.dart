@@ -48,89 +48,92 @@ class _OnboardingViewState extends State<OnboardingView> {
     final height = size.height;
 
     return Scaffold(
-      backgroundColor: AppColors.primary,
-      body: SafeArea(
-        child: Column(
-          children: [
-            SizedBox(height: height * 0.05),
-            // header logo widget
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SvgPicture.asset(
-                  'assets/svg/logo.svg',
-                  width: width * 0.05,
-                  height: height * 0.05,
-                  fit: BoxFit.contain,
-                ),
-                SizedBox(width: width * 0.015),
-                Text(
-                  'monex',
-                  style: AppTextStyles.splashTitleStyle(width * 0.5),
-                ),
-              ],
-            ),
-            SizedBox(height: height * 0.08),
-            Expanded(
-              child: PageView.builder(
-                controller: _pageController,
-                itemCount: onboardingPages.length,
-                onPageChanged: (index) {
-                  setState(() {
-                    _currentPage = index;
-                  });
-                },
-                itemBuilder: (context, index) {
-                  final page = onboardingPages[index];
-                  return OnboardingContent(
-                    data: page,
-                    width: width,
-                    height: height,
-                  );
-                },
+      backgroundColor: Colors.transparent,
+      body: Container(
+        decoration: const BoxDecoration(gradient: AppColors.scaffoldGradient),
+        child: SafeArea(
+          child: Column(
+            children: [
+              SizedBox(height: height * 0.05),
+              // header logo widget
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SvgPicture.asset(
+                    'assets/svg/logo.svg',
+                    width: width * 0.05,
+                    height: height * 0.05,
+                    fit: BoxFit.contain,
+                  ),
+                  SizedBox(width: width * 0.015),
+                  Text(
+                    'monex',
+                    style: AppTextStyles.splashTitleStyle(width * 0.5),
+                  ),
+                ],
               ),
-            ),
-            SizedBox(height: height * 0.02),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: List.generate(onboardingPages.length, (index) {
-                if (index == _currentPage) {
-                  return Container(
-                    width: 24,
-                    height: 8,
-                    margin: const EdgeInsets.symmetric(horizontal: 4),
-                    decoration: BoxDecoration(
-                      color: Colors.blue, // Active dot is blue
-                      borderRadius: BorderRadius.circular(4),
-                    ),
-                  );
-                } else {
-                  return Container(
-                    width: 8,
-                    height: 8,
-                    margin: const EdgeInsets.symmetric(horizontal: 4),
-                    decoration: BoxDecoration(
-                      color: Colors.blue[100], // Inactive dot is light blue
-                      shape: BoxShape.circle,
-                    ),
-                  );
-                }
-              }),
-            ),
-            SizedBox(height: height * 0.04),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: width * 0.08),
-              child: GradientButton(
-                text: _currentPage == onboardingPages.length - 1
-                    ? "LET'S GO"
-                    : "NEXT",
-                onPressed: _nextPage,
-                width: double.infinity,
-                height: 48,
+              SizedBox(height: height * 0.08),
+              Expanded(
+                child: PageView.builder(
+                  controller: _pageController,
+                  itemCount: onboardingPages.length,
+                  onPageChanged: (index) {
+                    setState(() {
+                      _currentPage = index;
+                    });
+                  },
+                  itemBuilder: (context, index) {
+                    final page = onboardingPages[index];
+                    return OnboardingContent(
+                      data: page,
+                      width: width,
+                      height: height,
+                    );
+                  },
+                ),
               ),
-            ),
-            SizedBox(height: height * 0.04),
-          ],
+              SizedBox(height: height * 0.02),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: List.generate(onboardingPages.length, (index) {
+                  if (index == _currentPage) {
+                    return Container(
+                      width: 24,
+                      height: 8,
+                      margin: const EdgeInsets.symmetric(horizontal: 4),
+                      decoration: BoxDecoration(
+                        color: Colors.blue, // Active dot is blue
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                    );
+                  } else {
+                    return Container(
+                      width: 8,
+                      height: 8,
+                      margin: const EdgeInsets.symmetric(horizontal: 4),
+                      decoration: BoxDecoration(
+                        color: Colors.blue[100], // Inactive dot is light blue
+                        shape: BoxShape.circle,
+                      ),
+                    );
+                  }
+                }),
+              ),
+              SizedBox(height: height * 0.04),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: width * 0.08),
+                child: GradientButton(
+                  text: _currentPage == onboardingPages.length - 1
+                      ? "LET'S GO"
+                      : "NEXT",
+                  onPressed: _nextPage,
+                  width: double.infinity,
+                  height: 48,
+                ),
+              ),
+              SizedBox(height: height * 0.04),
+            ],
+          ),
         ),
       ),
     );

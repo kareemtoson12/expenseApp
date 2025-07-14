@@ -19,4 +19,15 @@ class AppColors {
     begin: Alignment.topRight,
     end: Alignment.bottomLeft,
   );
+
+  static const LinearGradient scaffoldGradient = LinearGradient(
+    colors: [
+      Color(0xFF2196F3), // blue
+      Color(0xFFFFFFFF), // white
+      Color(0xFFFFFFFF), // white
+      Color(0xFFFFFFFF), // white
+    ],
+    begin: Alignment.topCenter,
+    end: Alignment.bottomCenter,
+  );
 }

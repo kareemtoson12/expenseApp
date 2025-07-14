@@ -17,72 +17,79 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.background,
-      body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              width: double.infinity,
-              padding: const EdgeInsets.only(
-                top: 60,
-                left: 24,
-                right: 24,
-                bottom: 32,
+      backgroundColor: Colors.transparent,
+      body: Container(
+        decoration: const BoxDecoration(gradient: AppColors.scaffoldGradient),
+        child: SafeArea(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.only(
+                  top: 60,
+                  left: 24,
+                  right: 24,
+                  bottom: 32,
+                ),
+                decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      Color(0xFF1E6FF9),
+                      Color(0xFF3A8DFF),
+                      Color(0xFF0057FF),
+                      Color(0xFF0057FF),
+                    ],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(60),
+                    bottomRight: Radius.circular(60),
+                  ),
+                ),
+                child: const Text(
+                  'Settings',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 28,
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: 1.2,
+                  ),
+                ),
               ),
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    Color(0xFF1E6FF9),
-                    Color(0xFF3A8DFF),
-                    Color(0xFF0057FF),
-                    Color(0xFF0057FF),
+              const SizedBox(height: 32),
+              Expanded(
+                child: ListView(
+                  padding: const EdgeInsets.symmetric(horizontal: 24),
+                  children: [
+                    SettingsListTile(title: 'About us', onTap: () {}),
+                    SettingsListTile(title: 'Privacy policy', onTap: () {}),
+                    SettingsListTile(
+                      title: 'Terms and conditions',
+                      onTap: () {},
+                    ),
+                    SettingsSwitchTile(
+                      title: 'Push notifications',
+                      value: pushNotifications,
+                      onChanged: (val) =>
+                          setState(() => pushNotifications = val),
+                    ),
+                    SettingsSwitchTile(
+                      title: 'Dark mode',
+                      value: darkMode,
+                      onChanged: (val) => setState(() => darkMode = val),
+                    ),
+                    SettingsListTile(
+                      title: 'Help & Support',
+                      icon: Icons.help_outline,
+                      onTap: () {},
+                    ),
                   ],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                ),
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(60),
-                  bottomRight: Radius.circular(60),
                 ),
               ),
-              child: const Text(
-                'Settings',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: 1.2,
-                ),
-              ),
-            ),
-            const SizedBox(height: 32),
-            Expanded(
-              child: ListView(
-                padding: const EdgeInsets.symmetric(horizontal: 24),
-                children: [
-                  SettingsListTile(title: 'About us', onTap: () {}),
-                  SettingsListTile(title: 'Privacy policy', onTap: () {}),
-                  SettingsListTile(title: 'Terms and conditions', onTap: () {}),
-                  SettingsSwitchTile(
-                    title: 'Push notifications',
-                    value: pushNotifications,
-                    onChanged: (val) => setState(() => pushNotifications = val),
-                  ),
-                  SettingsSwitchTile(
-                    title: 'Dark mode',
-                    value: darkMode,
-                    onChanged: (val) => setState(() => darkMode = val),
-                  ),
-                  SettingsListTile(
-                    title: 'Help & Support',
-                    icon: Icons.help_outline,
-                    onTap: () {},
-                  ),
-                ],
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -106,8 +113,8 @@ class SettingsListTile extends StatelessWidget {
       contentPadding: const EdgeInsets.symmetric(vertical: 2),
       title: Text(title, style: AppTextStyles.settingsItem),
       trailing: icon != null
-          ? Icon(icon, color: AppColors.primary, size: 22)
-          : const Icon(Icons.chevron_right, color: Colors.grey, size: 22),
+          ? Icon(icon, color: Color(0xFF1976D2), size: 22)
+          : const Icon(Icons.chevron_right, color: Color(0xFF1976D2), size: 22),
       onTap: onTap,
     );
   }
@@ -132,7 +139,7 @@ class SettingsSwitchTile extends StatelessWidget {
       trailing: Switch(
         value: value,
         onChanged: onChanged,
-        activeColor: AppColors.primary,
+        activeColor: AppColors.blue,
       ),
     );
   }

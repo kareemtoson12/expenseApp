@@ -11,6 +11,8 @@ import '../../presentation/auth/signup/signup_view.dart';
 import 'routes.dart';
 import 'package:expense/presentation/home/all_expenses_screen.dart';
 import 'package:expense/presentation/settings/settings_screen.dart';
+import 'package:expense/app/expense_app.dart';
+import 'package:expense/app/styles/app_colors.dart';
 
 Route<dynamic> generateRoute(RouteSettings settings) {
   switch (settings.name) {
@@ -25,7 +27,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
             getAllExpensesUseCase: sl<GetAllExpenses>(),
             deleteExpenseUseCase: sl<DeleteExpense>(),
             updateExpenseUseCase: sl<UpdateExpense>(),
-          )..init(), // ⬅️  دالة واحدة تُحمّل prefs ثم المصروفات بالترتيب
+          )..init(),
           child: const HomeScreen(),
         ),
       );
@@ -53,8 +55,15 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       );
     default:
       return MaterialPageRoute(
-        builder: (_) =>
-            const Scaffold(body: Center(child: Text('Unknown Route'))),
+        builder: (_) => Scaffold(
+          backgroundColor: Colors.transparent,
+          body: Container(
+            decoration: const BoxDecoration(
+              gradient: AppColors.scaffoldGradient,
+            ),
+            child: const Center(child: Text('Unknown Route')),
+          ),
+        ),
       );
   }
 }

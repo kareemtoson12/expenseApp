@@ -1,3 +1,4 @@
+import 'package:expense/app/styles/app_colors.dart' show AppColors;
 import 'package:expense/presentation/auth/login/widgets/login_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -62,122 +63,115 @@ class _LoginViewState extends State<LoginView> {
     return BlocProvider(
       create: (context) => _loginCubit,
       child: Scaffold(
-        backgroundColor: Colors.white,
+        //  backgroundColor: Colors.transparent,
         body: SafeArea(
-          child: BlocListener<LoginCubit, LoginState>(
-            listener: (context, state) {
-              if (state is LoginSuccess) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text(state.response.message),
-                    backgroundColor: Colors.green,
-                  ),
-                );
-                // Navigate to home page after successful login
-                Navigator.pushReplacementNamed(context, AppRoutes.home);
-              } else if (state is LoginError) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text(state.message),
-                    backgroundColor: Colors.red,
-                  ),
-                );
-              }
-            },
-            child: SingleChildScrollView(
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  children: [
-                    //login header
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [LoginHeader(width: width, height: height)],
+          child: Container(
+            height: height,
+            decoration: BoxDecoration(gradient: AppColors.scaffoldGradient),
+            child: BlocListener<LoginCubit, LoginState>(
+              listener: (context, state) {
+                if (state is LoginSuccess) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(state.response.message),
+                      backgroundColor: Colors.green,
                     ),
-                    const SizedBox(height: 32),
-                    //text fields
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: width * 0.05),
-                      child: LoginTextFields(
-                        emailController: _emailController,
-                        passwordController: _passwordController,
+                  );
+                  Navigator.pushReplacementNamed(context, AppRoutes.home);
+                } else if (state is LoginError) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(state.message),
+                      backgroundColor: Colors.red,
+                    ),
+                  );
+                }
+              },
+              child: SingleChildScrollView(
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [LoginHeader(width: width, height: height)],
                       ),
-                    ),
-                    const SizedBox(height: 32),
-                    //loginButton
-                    BlocBuilder<LoginCubit, LoginState>(
-                      builder: (context, state) {
-                        return LoginButton(
-                          text: state is LoginLoading
-                              ? 'LOGGING IN...'
-                              : 'LOGIN',
-                          onPressed: state is LoginLoading
-                              ? null
-                              : _handleLogin,
-                          width: width * 0.9,
-                          height: 48,
-                        );
-                      },
-                    ),
-                    // Forgot password
-                    /*  ForgotPassword(
-                      onTap: () {
-                        // Handle forgot password
-                      },
-                    ), */
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 8.0),
-                      child: Text('Or', style: AppTextStyles.registerText),
-                    ),
-
-                    SizedBox(height: 30),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: width * 0.05),
-                      child: Column(
+                      const SizedBox(height: 32),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: width * 0.05),
+                        child: LoginTextFields(
+                          emailController: _emailController,
+                          passwordController: _passwordController,
+                        ),
+                      ),
+                      const SizedBox(height: 32),
+                      BlocBuilder<LoginCubit, LoginState>(
+                        builder: (context, state) {
+                          return LoginButton(
+                            text: state is LoginLoading
+                                ? 'LOGGING IN...'
+                                : 'LOGIN',
+                            onPressed: state is LoginLoading
+                                ? null
+                                : _handleLogin,
+                            width: width * 0.9,
+                            height: 48,
+                          );
+                        },
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 8.0),
+                        child: Text('Or', style: AppTextStyles.registerText),
+                      ),
+                      const SizedBox(height: 30),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: width * 0.05),
+                        child: Column(
+                          children: [
+                            SocialButton(
+                              icon: Image.asset(
+                                'assets/png/google.png',
+                                width: 24,
+                                height: 24,
+                              ),
+                              text: 'CONTINUE WITH GOOGLE',
+                              onPressed: () {},
+                            ),
+                            const SizedBox(height: 16),
+                            SocialButton(
+                              icon: Image.asset(
+                                'assets/png/apple.png',
+                                width: 24,
+                                height: 24,
+                              ),
+                              text: 'CONTINUE WITH APPLE',
+                              onPressed: () {},
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 36),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          SocialButton(
-                            icon: Image.asset(
-                              'assets/png/google.png',
-                              width: 24,
-                              height: 24,
-                            ),
-                            text: 'CONTINUE WITH GOOGLE',
-                            onPressed: () {},
+                          Text(
+                            "Don't have an account? ",
+                            style: AppTextStyles.registerText,
                           ),
-                          const SizedBox(height: 16),
-                          SocialButton(
-                            icon: Image.asset(
-                              'assets/png/apple.png',
-                              width: 24,
-                              height: 24,
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.pushNamed(context, AppRoutes.signup);
+                            },
+                            child: Text(
+                              'Register here',
+                              style: AppTextStyles.registerLink,
                             ),
-                            text: 'CONTINUE WITH APPLE',
-                            onPressed: () {},
                           ),
                         ],
                       ),
-                    ),
-                    const SizedBox(height: 36),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "Don't have an account? ",
-                          style: AppTextStyles.registerText,
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.pushNamed(context, AppRoutes.signup);
-                          },
-                          child: Text(
-                            'Register here',
-                            style: AppTextStyles.registerLink,
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 16),
-                  ],
+                      const SizedBox(height: 16),
+                    ],
+                  ),
                 ),
               ),
             ),
