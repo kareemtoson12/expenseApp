@@ -1,7 +1,7 @@
 # Expense App
 
 A cross-platform expense tracking app built with Flutter, following Clean Architecture and best practices. The app uses Hive as a local database for fast, offline-first data storage.
-
+## 🔗 [Live Demo]( https://drive.google.com/file/d/18i35JVNMKd9H4SoadN2bieZTVf-2K21J/view?usp=sharing)   
 ## Features
 - User authentication (signup, login)
 - Add, view, update, and delete expenses
